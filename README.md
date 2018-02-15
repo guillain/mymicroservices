@@ -71,6 +71,14 @@ Docker and by preference in Swarm mode... to move maybe after on Kubernetes ;-)
 
 ## Usage
 
+### Microservices
+
+* http://[PUBLIC IP/FQDN]:20301 (web)
+* http://[PUBLIC IP/FQDN]:20401 (ui)
+* http://[PUBLIC IP/FQDN]:20501 (spark)
+* xxxxxxxx (phone number - tropo)
+
+
 ### Docker stack (Swarm mode)
 
 #### Prerequisite
