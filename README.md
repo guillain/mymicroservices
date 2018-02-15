@@ -1,4 +1,4 @@
-# *myapp-docker*
+# *myMicroServices* provided by Docker swarm
 
 ## Presentation
 
