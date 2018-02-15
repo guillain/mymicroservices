@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SnV Inc. Voting App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="includes/myhero.css" type="text/css">
+
+</head>
+
+<body ng-app="myHeroApp">
+
+<nav class="navbar navbar-default cstm-navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                Superhero & Villians
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right cstm-navbar-nav">
+                <li ><a ng-href="#/results">Results</a></li>
+                <li ><a ng-href="#/capcloud">More about Captain Cloud</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">More Info
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li ><a ng-href="#/demos">Demo Options</a></li>
+                        <li ><a ng-href="#/myheroapp">The MyHero Demo App</a></li>
+                        <li ><a ng-href="https://github.com/hpreston/myhero_demo/blob/master/README.md" target="_blank">MyHero on GitHub</a></li>
+                        <li ><a ng-href="http://ciscoshipped.io" target="_blank">Cisco Shipped</a></li>
+                        <li ><a ng-href="http://mantl.io" target="_blank">Cisco Mantl</a></li>
+                        <li ><a ng-href="http://cisco.com/go/metapod" target="_blank">Cisco Metacloud</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid bg-3 text-center padded-container">
+    <div ng-view=""></div>
+</div>
+
+<footer class="container-fluid bg-2 text-center">
+    <div class="row">
+        <div class="col-sm-6" align="right">
+            <img src="images/s_n_v_logo.jpg"
+                 class="img-responsive" width="200"
+            >
+        </div>
+        <div class="col-sm-6" align="left" style="vertical-align: middle; display: inline-block">
+            <em>- Making wearing costumes cool again!</em>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.min.js"></script>
+
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/controllers/results.js"></script>
+<script src="scripts/controllers/demos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+# Todo - Figure out how to deploy a Mosca Server Container in Vagrant for local development
+# Todo - Consider switching to RabbitMQ instead of Mosca - would prefer a true work queue over existing topics

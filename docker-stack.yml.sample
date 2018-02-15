@@ -1,0 +1,180 @@
+version: '3.0'
+
+networks:
+  public:
+  private:
+
+services:
+  data:
+    hostname: myapp_data
+    image: myapp_data
+    networks:
+      - private
+    #ports:
+    #  - 20101:5000/tcp
+    volumes:
+      - /docker/myapp/services/data:/app:rw
+    environment:
+      - myhero_data_key=[DATA KEY]
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  mqttpub:
+    hostname: myapp_mqttpub
+    image: myapp_mqttpub
+    networks:
+      - private
+    #ports:
+    #  - 20701:80/tcp
+    volumes:
+      - /docker/myapp/services/mqttpub:/app:rw
+    environment:
+      - myhero_data_key=[DATA KEY]
+      - myhero_data_server=http://myapp_data:5000
+      - myhero_mqtt_host=http://myapp_mqttpub:5000
+      - myhero_mqtt_port=1883
+    depends_on:
+      - data
+
+  mqttsub:
+    hostname: myapp_mqttsub
+    image: myapp_mqttsub
+    networks:
+      - private
+    #ports:
+    #  - 20801:5000/tcp
+    volumes:
+      - /docker/myapp/services/mqttsub:/app:rw
+    environment:
+      - myhero_data_key=[DATA KEY]
+      - myhero_data_server=http://myapp_data:5000
+      - myhero_mqtt_host=myapp_mqttpub
+      - myhero_mqtt_server=myapp_mqttpub
+      - myhero_mqtt_port=1883
+    depends_on:
+      - mqttpub
+
+  api:
+    hostname: myapp_api
+    image: myapp_api
+    networks:
+      - public
+      - private
+    ports:
+      - 20201:5000/tcp
+    volumes:
+      - /docker/myapp/services/api:/app:rw
+    environment:
+      - myhero_data_key=[DATA KEY]
+      - myhero_data_server=http://myapp_data:5000
+      - myhero_app_key=[APP KEY]
+      #- myhero_app_mode=direct # to don't use MQTT
+      - myhero_app_mode=queue
+      - myhero_mqtt_host=myapp_mqttpub
+      - myhero_mqtt_server=myapp_mqttpub
+      - myhero_mqtt_port=1883
+    depends_on:
+      - mqttsub
+
+  web:
+    hostname: myapp_web
+    image: myapp_web
+    networks:
+      - public
+    ports:
+      - 20301:5000/tcp
+    volumes:
+      - /docker/myapp/services/web:/app:rw
+    environment:
+      - myhero_app_key=[APP KEY]
+      - myhero_app_server=http://myapp_api:5000
+    depends_on:
+      - api
+
+  ui:
+    hostname: myapp_ui
+    image: myapp_ui
+    networks:
+      - public
+    ports:
+      - 20401:80/tcp
+    volumes:
+      - /docker/myapp/services/ui:/app:rw
+    environment:
+      - myhero_app_server=http://[PUBLIC IP/FQDN]:20201
+      - myhero_app_key=[APP KEY]
+      - myhero_spark_server=http://[PUBLIC IP/FQDN]:20501
+      - myhero_tropo_server=http://[PUBLIC IP/FQDN]:20601
+    depends_on:
+      - api
+
+  spark:
+    hostname: myapp_spark
+    image: myapp_spark
+    networks:
+      - public
+    ports:
+      - 20501:5000/tcp
+    volumes:
+      - /docker/myapp/services/spark:/app:rw
+    environment:
+      - myhero_app_key=[APP KEY]
+      - myhero_app_server=http://myapp_api:5000
+      - spark_token=[CISCO SPARK TOKEN]
+      - myhero_spark_bot_email=[CISCO SPARK BOT EMAIL]
+      - myhero_spark_bot_url=http://[PUBLIC IP/FQDN]:20501
+      - myhero_spark_bot_secret=[SPARK KEY]
+      - myhero_spark_roomid=[CISCO SPARK ROOMID]
+    depends_on:
+      - api
+
+  tropo:
+    hostname: myapp_tropo
+    image: myapp_tropo
+    networks:
+      - public
+    ports:
+      - 20601:5000/tcp
+    volumes:
+      - /docker/myapp/services/tropo:/app:rw
+    environment:
+      - myhero_app_key=[APP KEY]
+      - myhero_app_server=http://myapp_api:5000
+      - myhero_tropo_secret=[TROPO KEY]
+      - myhero_tropo_user=[CISCO TROPO USER]
+      - myhero_tropo_pass=[CISCO TROPO PASS]
+      - myhero_tropo_prefix=1678
+      - myhero_tropo_url=http://[PUBLIC IP/FQDN]:20601
+    depends_on:
+      - api
+
+  mysql:
+    image: mysql
+    hostname: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=[MYSQL ROOT PASS]
+    networks:
+      - private
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    hostname: phpmyadmin
+    environment:
+     #- PMA_ARBITRARY=1    
+     PMA_HOST: [MYSQL SERVER 1], [MYSQL SERVER 2]
+     PMA_PORT: [MYSQL SERVER PORT 1], [MYSQL SERVER PORT 2]
+     PMA_USER: [MYSQL SERVER USER 1], [MYSQL SERVER USER 2]
+     PMA_PASSWORD: [MYSQL SERVER ROOT PASS 1], [MYSQL SERVER ROOT PASS 2]
+    depends_on:
+      - mysql
+    ports:
+     - 8081:80
+    volumes:
+     - /sessions
+    networks:
+      - public
+      - private
+ 

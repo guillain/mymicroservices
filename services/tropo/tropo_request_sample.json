@@ -1,0 +1,36 @@
+{
+  "session": {
+    "id": "cfe8a9317faad747ba2eb814079c873a",
+    "accountId": "5053541",
+    "timestamp": "2016-05-13T20:05:48.101Z",
+    "userType": "HUMAN",
+    "initialText": "hello",
+    "callId": "16da043487a0e35c9b16210ac455ea58",
+    "to": {
+      "id": "14199483202",
+      "name": null,
+      "channel": "TEXT",
+      "network": "SMS"
+    },
+    "from": {
+      "id": "14195596543",
+      "name": null,
+      "channel": "TEXT",
+      "network": "SMS"
+    },
+    "headers": {
+      "Call-ID": "cymhywf6lyj4",
+      "CSeq": "1 INVITE",
+      "Max-Forwards": "70",
+      "Request URI": "sip:4199483202@10.108.198.98",
+      "x-sid": "0b443e15585ecd4995110d3ad3538678",
+      "From": "<sip:4195596543@10.108.198.98;real-id=14195596543>;tag=apib5wmqsiee",
+      "To": "<sip:4199483202@10.108.198.98;real-id=14199483202>",
+      "Content-Length": "5",
+      "x-tropo-sms": "true",
+      "Contact": "<sip:198.11.254.102:5060;transport=udp>",
+      "Content-Type": "text/plain",
+      "Via": "SIP/2.0/UDP 198.11.254.102:5060;branch=z9hG4bK8frwdiiyn96z;rport=5060;received=10.108.198.74"
+    }
+  }
+}
